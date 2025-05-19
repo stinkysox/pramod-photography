@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram } from "react-icons/fa";
 import "./LatestWork.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 // Animation configurations
 const containerVariants = {
@@ -27,7 +28,9 @@ const itemVariants = {
 };
 
 const initialCategories = {
-  Wedding: [
+  Wedding: [],
+
+  Prewedding: [
     {
       imageUrl: "https://i.postimg.cc/RZrCmwYw/VNU04577.jpg",
       category: "Wedding",
@@ -65,9 +68,7 @@ const initialCategories = {
       imageUrl: "https://i.postimg.cc/jd90NNYC/VNU04514.jpg",
       category: "Wedding",
     },
-  ],
 
-  Prewedding: [
     {
       imageUrl: "https://i.postimg.cc/d34CX46R/VNU00906.jpg",
       category: "Prewedding",
@@ -196,6 +197,8 @@ const initialCategories = {
   ],
 };
 
+// Assuming initialCategories, containerVariants, itemVariants are defined/imported somewhere
+
 const LatestWork = () => {
   const categoryKeys = Object.keys(initialCategories);
   const [activeCategory, setActiveCategory] = useState(categoryKeys[0] || "");
@@ -239,42 +242,52 @@ const LatestWork = () => {
         ))}
       </div>
 
-      {!imagesLoaded && <p className="loading-message">Loading images...</p>}
+      {/* Full-screen loading overlay with spinner */}
+      {!imagesLoaded && (
+        <div className="loading-screen">
+          <ClipLoader color="#00bfff" size={60} />
+        </div>
+      )}
 
       <AnimatePresence mode="wait">
-        <motion.div
-          className="image-grid"
-          variants={containerVariants}
-          initial="hidden"
-          animate={imagesLoaded ? "visible" : "hidden"}
-          key={activeCategory}
-        >
-          {initialCategories[activeCategory] &&
-          initialCategories[activeCategory].length > 0 ? (
-            initialCategories[activeCategory].map((imageObj, index) => (
+        {imagesLoaded && (
+          <motion.div
+            className="image-grid"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            key={activeCategory}
+          >
+            {initialCategories[activeCategory] &&
+            initialCategories[activeCategory].length > 0 ? (
+              initialCategories[activeCategory].map((imageObj, index) => (
+                <motion.div
+                  key={`${activeCategory}-${index}`}
+                  variants={itemVariants}
+                  style={{ overflow: "hidden" }}
+                >
+                  <img
+                    src={imageObj.imageUrl}
+                    alt={`${activeCategory} photo ${index + 1}`}
+                    className="gallery-img"
+                    onClick={() => setSelectedImage(imageObj.imageUrl)}
+                  />
+                </motion.div>
+              ))
+            ) : (
               <motion.div
-                key={`${activeCategory}-${index}`}
+                className="empty-images"
+                key="empty"
                 variants={itemVariants}
-                style={{ overflow: "hidden" }}
               >
-                <img
-                  src={imageObj.imageUrl}
-                  alt={`${activeCategory} photo ${index + 1}`}
-                  className="gallery-img"
-                  onClick={() => setSelectedImage(imageObj.imageUrl)}
-                />
+                <p className="no-images">
+                  No images available in this category.
+                </p>
               </motion.div>
-            ))
-          ) : (
-            <motion.div
-              className="empty-images"
-              key="empty"
-              variants={itemVariants}
-            >
-              <p>No images available in this category.</p>
-            </motion.div>
-          )}
-        </motion.div>
+            )}
+          </motion.div>
+        )}
       </AnimatePresence>
 
       <AnimatePresence>

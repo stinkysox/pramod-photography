@@ -114,6 +114,23 @@
   margin: auto;
 }
 
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.no-images {
+  text-align: center;
+}
 .close-btn {
   position: fixed;
   top: 30px;
@@ -159,6 +176,9 @@
 
 .glow-icon:hover {
   transform: scale(1.1);
+}
+
+.empty-images {
 }
 
 @keyframes glow {
