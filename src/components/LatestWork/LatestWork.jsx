@@ -27,7 +27,22 @@ const itemVariants = {
 };
 
 const initialCategories = {
-  Wedding: [],
+  Wedding: [
+    {
+      imageUrl:
+        "https://i.postimg.cc/BnNPW1hH/Screenshot-2025-05-19-180338.png",
+    },
+
+    {
+      imageUrl:
+        "https://i.postimg.cc/6qdTM727/Screenshot-2025-05-19-180502.png",
+    },
+
+    {
+      imageUrl:
+        "https://i.postimg.cc/SxQjGxys/Screenshot-2025-05-19-180601.png",
+    },
+  ],
   Prewedding: [
     {
       imageUrl: "https://i.postimg.cc/RZrCmwYw/VNU04577.jpg",

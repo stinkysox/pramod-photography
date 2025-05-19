@@ -9,6 +9,7 @@ import TeasersSection from "../../components/TeasersSection/TeasersSection";
 import LatestWork from "../../components/LatestWork/LatestWork";
 import Testimonials from "../../components/Testimonials/Testimonials";
 import ContactSection from "../../components/ContactSection/ContactSection";
+import Footer from "../../components/Footer/Footer";
 import ScrollButton from "../../components/ScrollButton/ScrollButton";
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <TeasersSection />
       <Testimonials />
       <ContactSection />
+      <Footer />
       <ScrollButton />
     </section>
   );
