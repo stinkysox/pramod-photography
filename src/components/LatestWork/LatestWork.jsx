@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram } from "react-icons/fa";
 import "./LatestWork.css";
-import ClipLoader from "react-spinners/ClipLoader";
 
 // Animation configurations
 const containerVariants = {
@@ -29,7 +28,6 @@ const itemVariants = {
 
 const initialCategories = {
   Wedding: [],
-
   Prewedding: [
     {
       imageUrl: "https://i.postimg.cc/RZrCmwYw/VNU04577.jpg",
@@ -63,12 +61,10 @@ const initialCategories = {
       imageUrl: "https://i.postimg.cc/FRndV7HG/VNU04771.jpg",
       category: "Wedding",
     },
-
     {
       imageUrl: "https://i.postimg.cc/jd90NNYC/VNU04514.jpg",
       category: "Wedding",
     },
-
     {
       imageUrl: "https://i.postimg.cc/d34CX46R/VNU00906.jpg",
       category: "Prewedding",
@@ -93,7 +89,6 @@ const initialCategories = {
       imageUrl: "https://i.postimg.cc/fTC5nvyr/VNU05189.jpg",
       category: "Prewedding",
     },
-
     {
       imageUrl: "https://i.postimg.cc/Jhv1zJ6N/1-2.jpg",
       category: "Prewedding",
@@ -125,7 +120,6 @@ const initialCategories = {
       category: "Engagement",
     },
   ],
-
   Haldi: [
     {
       imageUrl: "https://i.postimg.cc/jdXkXTrm/0-25.jpg",
@@ -147,12 +141,10 @@ const initialCategories = {
       imageUrl: "https://i.postimg.cc/vHc3WV3g/0-2.jpg",
       category: "Haldi",
     },
-
     {
       imageUrl: "https://i.postimg.cc/7PgTjYhs/DSC02782.jpg",
       category: "Haldi",
     },
-
     {
       imageUrl: "https://i.postimg.cc/SRqjmCRZ/DSC02759.jpg",
       category: "Haldi",
@@ -162,7 +154,6 @@ const initialCategories = {
       category: "Haldi",
     },
   ],
-
   "Baby Shoot": [
     {
       imageUrl:
@@ -197,34 +188,10 @@ const initialCategories = {
   ],
 };
 
-// Assuming initialCategories, containerVariants, itemVariants are defined/imported somewhere
-
 const LatestWork = () => {
   const categoryKeys = Object.keys(initialCategories);
   const [activeCategory, setActiveCategory] = useState(categoryKeys[0] || "");
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
-
-  useEffect(() => {
-    setImagesLoaded(false);
-    const imagesToLoad = initialCategories[activeCategory]?.length || 0;
-    let loadedCount = 0;
-
-    if (imagesToLoad > 0) {
-      initialCategories[activeCategory].forEach((imageObj) => {
-        const img = new Image();
-        img.src = imageObj.imageUrl;
-        img.onload = img.onerror = () => {
-          loadedCount++;
-          if (loadedCount === imagesToLoad) {
-            setImagesLoaded(true);
-          }
-        };
-      });
-    } else {
-      setImagesLoaded(true);
-    }
-  }, [activeCategory]);
 
   return (
     <div className="latest-work">
@@ -242,52 +209,41 @@ const LatestWork = () => {
         ))}
       </div>
 
-      {/* Full-screen loading overlay with spinner */}
-      {!imagesLoaded && (
-        <div className="loading-screen">
-          <ClipLoader color="#00bfff" size={60} />
-        </div>
-      )}
-
       <AnimatePresence mode="wait">
-        {imagesLoaded && (
-          <motion.div
-            className="image-grid"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            key={activeCategory}
-          >
-            {initialCategories[activeCategory] &&
-            initialCategories[activeCategory].length > 0 ? (
-              initialCategories[activeCategory].map((imageObj, index) => (
-                <motion.div
-                  key={`${activeCategory}-${index}`}
-                  variants={itemVariants}
-                  style={{ overflow: "hidden" }}
-                >
-                  <img
-                    src={imageObj.imageUrl}
-                    alt={`${activeCategory} photo ${index + 1}`}
-                    className="gallery-img"
-                    onClick={() => setSelectedImage(imageObj.imageUrl)}
-                  />
-                </motion.div>
-              ))
-            ) : (
+        <motion.div
+          className="image-grid"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          key={activeCategory}
+        >
+          {initialCategories[activeCategory] &&
+          initialCategories[activeCategory].length > 0 ? (
+            initialCategories[activeCategory].map((imageObj, index) => (
               <motion.div
-                className="empty-images"
-                key="empty"
+                key={`${activeCategory}-${index}`}
                 variants={itemVariants}
+                style={{ overflow: "hidden" }}
               >
-                <p className="no-images">
-                  No images available in this category.
-                </p>
+                <img
+                  src={imageObj.imageUrl}
+                  alt={`${activeCategory} photo ${index + 1}`}
+                  className="gallery-img"
+                  onClick={() => setSelectedImage(imageObj.imageUrl)}
+                />
               </motion.div>
-            )}
-          </motion.div>
-        )}
+            ))
+          ) : (
+            <motion.div
+              className="empty-images"
+              key="empty"
+              variants={itemVariants}
+            >
+              <p className="no-images">No images available in this category.</p>
+            </motion.div>
+          )}
+        </motion.div>
       </AnimatePresence>
 
       <AnimatePresence>
@@ -320,13 +276,11 @@ const LatestWork = () => {
 
       <div className="instagram-icon">
         <a
-          href="https://www.instagram.com/pramod.photogrphy/?igsh=MXVuM2N1eW9qOTgyaw%3D%3D#"
+          href="https://www.instagram.com/pramod.photogrphy/"
           target="_blank"
           rel="noopener noreferrer"
-          className="glow-icon"
-          aria-label="Instagram Profile"
         >
-          <FaInstagram />
+          <FaInstagram size={30} />
         </a>
       </div>
     </div>
