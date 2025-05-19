@@ -307,7 +307,7 @@ const LatestWork = () => {
 
       <div className="instagram-icon">
         <a
-          href="https://www.instagram.com/yourprofile"
+          href="https://www.instagram.com/pramod.photogrphy/?igsh=MXVuM2N1eW9qOTgyaw%3D%3D#"
           target="_blank"
           rel="noopener noreferrer"
           className="glow-icon"
